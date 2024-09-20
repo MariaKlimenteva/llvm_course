@@ -45,12 +45,6 @@ void simInit()
     simFlush();
 }
 
-// int simRand() {
-//     time_t currentTime = time(NULL);
-//     srand((unsigned int)currentTime);
-//     return rand();
-// }
-
 void simExit() {
     SDL_Event event;
     while (1) {

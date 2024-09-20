@@ -8,9 +8,6 @@ typedef struct {
     int x;
     int y;
     int radius;
-    int r;
-    int g;
-    int b;
     int sizeChangeSpeed;
     int colorChangeSpeed;
     int xSpeed;
@@ -49,10 +46,7 @@ void app() {
         circles[i].x = rand() % SIM_X_SIZE;
         circles[i].y = rand() % SIM_Y_SIZE;
         circles[i].radius = rand() % 50 + 2;
-        circles[i].r = rand() % 128 + 128;
-        circles[i].g = rand() % 256;
-        circles[i].b = rand() % 128;
-        
+
         circles[i].sizeChangeSpeed = rand() % 5 + 1;
         circles[i].colorChangeSpeed = rand() % 128 + 1;
         circles[i].xSpeed = (rand() % 2) - 1; 
@@ -67,11 +61,7 @@ void app() {
             if (circles[i].radius > SIM_X_SIZE / 12) {
                 circles[i].radius = rand() % 50 + 2;
             }
-            circles[i].r = (circles[i].r + circles[i].colorChangeSpeed ) % 256;
-            circles[i].g = (circles[i].g + circles[i].colorChangeSpeed) % 256;
-            circles[i].b = (circles[i].b + circles[i].colorChangeSpeed ) % 256;
-            
-            
+
             circles[i].x = rand() % SIM_X_SIZE;
             circles[i].y = rand() % SIM_Y_SIZE;
             
