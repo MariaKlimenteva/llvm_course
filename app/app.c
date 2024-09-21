@@ -12,6 +12,9 @@ typedef struct {
     int colorChangeSpeed;
     int xSpeed;
     int ySpeed;
+    int r;
+    int g;
+    int b;
 } Circle;
 
 Circle circles[NUM_CIRCLES];
@@ -26,13 +29,14 @@ int getAbsVelocity(int v1, int v2) {
   return (v1 + v2) & 0xFF;
 }
 
-void DrawCircle(int x, int y, int radius, int abs_velocity) {
+void DrawCircle(int x, int y, int radius, int abs_velocity, int r, int g, int b) {
     for (int dy = -radius; dy < radius; dy++) {
         for (int dx = -radius; dx < radius; dx++) {
             if (dx * dx + dy * dy < radius * radius) {
                 int px = x + dx;
                 int py = y + dy;
-                simPutPixel(px, py, 0xFFB00AFF + (abs_velocity << 6));
+                int argb = (255 << 24) | (r << 16) | (g << 8) | b; 
+                simPutPixel(px, py, argb + (abs_velocity * 10 << 6));
             }
         }
     }
@@ -45,12 +49,16 @@ void app() {
     for (int i = 0; i < NUM_CIRCLES; i++) {
         circles[i].x = rand() % SIM_X_SIZE;
         circles[i].y = rand() % SIM_Y_SIZE;
+        circles[i].r = rand() % 128 + 128;
+        circles[i].g = rand() % 256;
+        circles[i].b = rand() % 128;
         circles[i].radius = rand() % 50 + 2;
 
         circles[i].sizeChangeSpeed = rand() % 5 + 1;
         circles[i].colorChangeSpeed = rand() % 128 + 1;
         circles[i].xSpeed = (rand() % 2) - 1; 
         circles[i].ySpeed = (rand() % 2) - 1; 
+        
     }
     
     while (1) {
@@ -64,9 +72,12 @@ void app() {
 
             circles[i].x = rand() % SIM_X_SIZE;
             circles[i].y = rand() % SIM_Y_SIZE;
+            circles[i].r = (circles[i].r + circles[i].colorChangeSpeed ) % 256;
+            circles[i].g = (circles[i].g + circles[i].colorChangeSpeed) % 256;
+            circles[i].b = (circles[i].b + circles[i].colorChangeSpeed ) % 256;
             
             DrawCircle(circles[i].x, circles[i].y, circles[i].radius, 
-            getAbsVelocity(circles[i].xSpeed, circles[i].ySpeed));     
+            getAbsVelocity(circles[i].xSpeed, circles[i].ySpeed), circles[i].r, circles[i].g, circles[i].b);     
             simFlush();
         }
     }
