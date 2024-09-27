@@ -45,6 +45,11 @@ void simInit()
     simFlush();
 }
 
+int simRand()
+{
+    return rand();
+}
+
 void simExit() {
     SDL_Event event;
     while (1) {

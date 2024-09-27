@@ -1,6 +1,4 @@
 #include "sim.h"
-#include <time.h>
-#include <stdlib.h>
 
 #define NUM_CIRCLES 15
 
@@ -43,21 +41,18 @@ void DrawCircle(int x, int y, int radius, int abs_velocity, int r, int g, int b)
 }
 
 void app() {
-    time_t currentTime = time(NULL);
-    srand((unsigned int)currentTime);
-
     for (int i = 0; i < NUM_CIRCLES; i++) {
-        circles[i].x = rand() % SIM_X_SIZE;
-        circles[i].y = rand() % SIM_Y_SIZE;
-        circles[i].r = rand() % 128 + 128;
-        circles[i].g = rand() % 256;
-        circles[i].b = rand() % 128;
-        circles[i].radius = rand() % 50 + 2;
+        circles[i].x = simRand() % SIM_X_SIZE;
+        circles[i].y = simRand() % SIM_Y_SIZE;
+        circles[i].r = simRand() % 128 + 128;
+        circles[i].g = simRand() % 256;
+        circles[i].b = simRand() % 128;
+        circles[i].radius = simRand() % 50 + 2;
 
-        circles[i].sizeChangeSpeed = rand() % 5 + 1;
-        circles[i].colorChangeSpeed = rand() % 128 + 1;
-        circles[i].xSpeed = (rand() % 2) - 1; 
-        circles[i].ySpeed = (rand() % 2) - 1; 
+        circles[i].sizeChangeSpeed = simRand() % 5 + 1;
+        circles[i].colorChangeSpeed = simRand() % 128 + 1;
+        circles[i].xSpeed = (simRand() % 2) - 1; 
+        circles[i].ySpeed = (simRand() % 2) - 1; 
         
     }
     
@@ -67,11 +62,11 @@ void app() {
             
             circles[i].radius += circles[i].sizeChangeSpeed;
             if (circles[i].radius > SIM_X_SIZE / 12) {
-                circles[i].radius = rand() % 50 + 2;
+                circles[i].radius = simRand() % 50 + 2;
             }
 
-            circles[i].x = rand() % SIM_X_SIZE;
-            circles[i].y = rand() % SIM_Y_SIZE;
+            circles[i].x = simRand() % SIM_X_SIZE;
+            circles[i].y = simRand() % SIM_Y_SIZE;
             circles[i].r = (circles[i].r + circles[i].colorChangeSpeed ) % 256;
             circles[i].g = (circles[i].g + circles[i].colorChangeSpeed) % 256;
             circles[i].b = (circles[i].b + circles[i].colorChangeSpeed ) % 256;
