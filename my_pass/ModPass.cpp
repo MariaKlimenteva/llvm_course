@@ -5,7 +5,7 @@ using namespace llvm;
 
 struct MyModPass : public PassInfoMixin<MyModPass> {
   PreservedAnalyses run(Module &M, ModuleAnalysisManager &AM) {
-    if(M.getName() == "../app/app.c") {
+    if(M.getName() == "../app/simple_app.c") {
       for (auto &F : M) {
         LLVMContext &Ctx = F.getContext();
         // Тип аргумента Logger (char*)
@@ -46,7 +46,7 @@ struct MyModPass : public PassInfoMixin<MyModPass> {
 
 PassPluginLibraryInfo getPassPluginInfo() {
   const auto callback = [](PassBuilder &PB) {
-    PB.registerPipelineStartEPCallback([&](ModulePassManager &MPM, auto) {
+    PB.registerOptimizerLastEPCallback([&](ModulePassManager &MPM, auto) {
       MPM.addPass(MyModPass{});
       return true;
     });
